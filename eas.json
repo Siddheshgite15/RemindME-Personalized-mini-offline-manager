@@ -1,0 +1,25 @@
+{
+    "build": {
+        "preview": {
+            "android": {
+                "buildType": "apk",
+                "env": {
+                    "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+                    "GRADLE_OPTS": "-Dorg.gradle.jvmargs=-Xmx4g"
+                }
+            }
+        },
+        "production": {
+            "android": {
+                "buildType": "app-bundle",
+                "env": {
+                    "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+                    "GRADLE_OPTS": "-Dorg.gradle.jvmargs=-Xmx4g"
+                }
+            }
+        }
+    },
+    "cli": {
+        "appVersionSource": "local"
+    }
+}

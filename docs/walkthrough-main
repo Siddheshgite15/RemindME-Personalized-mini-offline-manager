@@ -1,0 +1,111 @@
+# RemindMe — Walkthrough
+
+## What Was Built
+
+A fully offline React Native Expo task reminder app with **3 task categories**, **motivational notifications**, and a **dark premium UI** — using only **3 extra packages** beyond Expo defaults.
+
+---
+
+## Project Structure
+
+```
+d:\Clients\RemindMe\
+├── app/                         # 11 screen files
+│   ├── _layout.js               # Root layout + auth gate
+│   ├── index.js                 # Entry redirect
+│   ├── onboarding.js            # Name entry (first launch)
+│   ├── (tabs)/                  # Tab navigation
+│   │   ├── _layout.js           # Tab bar config
+│   │   ├── home.js              # Dashboard + quote + summary
+│   │   ├── daily.js             # Daily schedule list
+│   │   ├── reminders.js         # Reminders list + toggle
+│   │   └── timed.js             # Timed tasks + completion
+│   ├── daily/form.js            # Add/Edit daily schedule
+│   ├── reminder/form.js         # Add/Edit reminder
+│   └── timed/form.js            # Add/Edit timed task
+├── components/                  # 3 reusable components
+│   ├── TaskCard.js              # Universal task card
+│   ├── FAB.js                   # Floating action button
+│   └── EmptyState.js            # Empty list state
+├── constants/
+│   ├── theme.js                 # Dark theme design tokens
+│   └── motivational.js          # 50+ motivational templates
+├── utils/
+│   ├── storage.js               # AsyncStorage CRUD (generic)
+│   ├── notifications.js         # Notification scheduling
+│   └── helpers.js               # Date/time + message utils
+├── assets/
+│   ├── images/logo.png          # User-provided logo
+│   └── sounds/alarm.wav         # Generated alarm sound
+├── app.json                     # Expo config
+├── eas.json                     # APK build config
+└── package.json                 # 3 extra deps only
+```
+
+---
+
+## Features Implemented
+
+| Feature | Details |
+|---|---|
+| **Onboarding** | Name entry on first launch, persisted in AsyncStorage |
+| **Dashboard** | Time-based greeting, motivational quote, 3 summary cards with counts |
+| **Daily Schedule** | CRUD with time picker, 25-char task name limit, repeating alarm notifications |
+| **Reminders** | CRUD with time picker, active/inactive toggle, repeating daily notifications |
+| **Timed Tasks** | CRUD with days/months duration picker, deadline countdown with color coding (🟢🟡🔴), completion toggle, Google Calendar-style early reminders (2d, 1d, deadline) |
+| **Motivational Messages** | 50+ templates with `{name}/{task}` placeholders, user can choose custom or motivational per task |
+| **Notifications** | `expo-notifications` with Android channels (alarm + default), custom alarm sound for daily schedules |
+| **Dark Theme** | Deep navy background, glassmorphism cards, purple/teal/coral accents |
+| **Offline** | 100% offline — all data in AsyncStorage, no network required |
+
+---
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npx expo export --platform android` | ✅ Exit code 0 |
+| Bundle JS size | ~3.5 MB |
+| Asset total | ~482 KB (logo) |
+| Extra dependencies | 3 only (async-storage, expo-notifications, expo-av) |
+
+---
+
+## How to Run & Test
+
+### Development (Expo Go)
+```bash
+cd d:\Clients\RemindMe
+npx expo start
+```
+Scan the QR code with **Expo Go** on your Android phone.
+
+> [!NOTE]
+> Custom alarm sounds won't work in Expo Go — they require a dev build. All other features work in Expo Go.
+
+### Dev Build (full features including alarm sound)
+```bash
+npx expo run:android
+```
+
+---
+
+## How to Build APK
+
+```bash
+# 1. Install EAS CLI (one-time)
+npm install -g eas-cli
+
+# 2. Login to your Expo account
+eas login
+
+# 3. Build APK
+eas build -p android --profile preview
+
+# 4. Download the .apk from the URL provided by EAS
+```
+
+Expected APK size: **~15-20 MB**
+
+> [!TIP]
+> The `preview` profile in [eas.json](file:///d:/Clients/RemindMe/eas.json) is configured to output `.apk` (not `.aab`), so you can directly install it on any Android device without the Play Store.
